@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<bean id="peak_deal" class="com.peak.core.db.Jdbc">
+		<constructor-arg name="host" value="192.168.143.39:3306" />
+		<constructor-arg name="userName" value="root" />
+		<constructor-arg name="password" value="abcdabcd" />
+		<constructor-arg name="dbName" value="peak_deal" />
+		<constructor-arg name="dbTable" value="channel,channel_package,channel_version,game,game_channel_info,order,sharding_configs,test_type" />
+		<property name="initialSize" value="20" />
+		<property name="maxActive" value="30" />
+		<property name="maxIdle" value="10" />
+		<property name="minIdle" value="5" />
+	</bean>
+
+	<bean id="jdbcFactory" class="com.peak.core.db.JdbcFactory">
+		<constructor-arg name="packageScan" value="com.peak.shared.table" />
+		<constructor-arg name="jdbcList">
+			<list value-type="com.peak.core.db.Jdbc">
+				<ref bean="peak_deal"/>
+			</list>
+		</constructor-arg>
+	</bean>
+
+</beans>
